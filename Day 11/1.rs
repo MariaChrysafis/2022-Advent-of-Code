@@ -108,7 +108,6 @@ fn main() {
     let mut vec: Vec<usize> = Vec::new();
     for monkey in monkeys.iter_mut() {
         vec.push(monkey.inspect);
-        //println!("{}", monkey.inspect);
     }
     vec.sort();
     vec.reverse();
