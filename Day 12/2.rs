@@ -97,7 +97,6 @@ fn main() {
                         let beginning = input[i as usize][j as usize] as i32;
                         let ending = input[new_i as usize][new_j as usize] as i32;
                         if beginning >= ending - 1 {
-                            //gr.adj[(i * m as i32 + j) as usize].push(((new_i * m as i32 + new_j) as usize, 1));
                             gr.adj[(new_i * m as i32 + new_j) as usize].push(((i * m as i32 + j) as usize, 1));
                         }
                     }
