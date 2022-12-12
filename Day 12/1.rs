@@ -70,7 +70,6 @@ fn main() {
     let n = input.len();
     let m = input[1].len();
     let mut gr: Graph = Graph::new(n * m);
-    println!("{} {}", n, m);
     let mut start: (usize, usize) = (0, 0);
     let mut end: (usize, usize) = (0, 0);
     for i in 0..n as usize {
@@ -98,7 +97,6 @@ fn main() {
                         let beginning = input[i as usize][j as usize] as i32;
                         let ending = input[new_i as usize][new_j as usize] as i32;
                         if beginning >= ending - 1 {
-                            println!("{} {} {} {}", new_i, new_j, i, j);
                             gr.adj[(i * m as i32 + j) as usize].push(((new_i * m as i32 + new_j) as usize, 1));
                         }
                     }
