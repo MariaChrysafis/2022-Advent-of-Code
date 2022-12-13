@@ -43,15 +43,15 @@ fn get_elements(s: Vec<char>) -> Vec<Vec<char>> {
     ans.push(Vec::new());
     let mut sum = 0;
     for i in 1..s.len() - 1 {
-        if s[i] == '[' {
-            sum += 1;
-        }
-        if s[i] == ']' {
-            sum -= 1;
-        }
-        if sum == 0 && s[i] == ',' {
-            ans.push(Vec::new());
-            continue;
+        match s[i] {
+            '[' => sum += 1,
+            ']' => sum -= 1,
+            _ => {
+                if sum == 0 && s[i] == ',' {
+                    ans.push(Vec::new());
+                    continue;
+                }
+            },
         }
         let last_index = ans.len() - 1;
         ans[last_index].push(s[i]);
@@ -68,23 +68,17 @@ fn wrap_parenthesis (s1: Vec<char>) -> Vec<char> {
 }
 
 fn compare(mut s1: Vec<char>, mut s2: Vec<char>) -> i32 {
-    //println!("{:?} {:?}", s1, s2);
     if !s1.contains(&'[') && !s2.contains(&'[') {
-        let string1: String = s1.into_iter().collect();
-        let string2: String = s2.into_iter().collect();
-        let x1: i32 = string1.parse().unwrap();
-        let x2: i32 = string2.parse().unwrap();
+        let x1: i32 = (s1.into_iter().collect::<String>()).parse().unwrap();
+        let x2: i32 = (s2.into_iter().collect::<String>()).parse().unwrap();
         return Ord::cmp(&x1, &x2) as i32;
     }
     if s1.contains(&'[') && s2.contains(&']') {
         let new_s1 = get_elements(s1.clone());
         let new_s2 = get_elements(s2.clone());
         for i in 0..max(new_s1.len(), new_s2.len()) {
-            if i >= new_s1.len() {
-                return -1;
-            }
-            if i >= new_s2.len() {
-                return 1;
+            if i >= new_s1.len() || i >= new_s2.len() {
+                return if (i >= new_s1.len()) {return -1;} else {return 1;};
             }
             match compare(new_s1[i].clone(), new_s2[i].clone()) {
                 n if (n == -1 || n == 1) => return n, _ => continue,
