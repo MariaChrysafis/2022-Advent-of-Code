@@ -36,6 +36,9 @@ impl Scanner {
 }
 
 fn get_elements(s: Vec<char>) -> Vec<Vec<char>> {
+    if s.len() == 2 {
+        return Vec::new();
+    }
     let mut ans: Vec<Vec<char>> = Vec::new();
     ans.push(Vec::new());
     let mut sum = 1;
@@ -56,8 +59,15 @@ fn get_elements(s: Vec<char>) -> Vec<Vec<char>> {
     return ans;
 }
 
+fn wrap_parenthesis (s1: Vec<char>) -> Vec<char> {
+    let mut gamma = vec!['['];
+    let mut lala = s1;
+    gamma.append(&mut lala);
+    gamma.push(']');
+    return gamma;
+}
+
 fn compare(mut s1: Vec<char>, mut s2: Vec<char>) -> i32 {
-    //println!("{:?} {:?}", s1, s2);
     if s1 == s2 {
         return 0;
     }
@@ -68,21 +78,16 @@ fn compare(mut s1: Vec<char>, mut s2: Vec<char>) -> i32 {
         if s1 < s2 {
             return -1;
         }
-    }
-    if s1.len() == 0 {
-        return -1;
-    }
-    if s2.len() == 0 {
-        return 1;
+        return 0;
     }
     if s1.contains(&'[') && s2.contains(&']') {
         let new_s1 = get_elements(s1.clone());
         let new_s2 = get_elements(s2.clone());
         for i in 0..max(new_s1.len(), new_s2.len()) {
-            if i == new_s1.len() {
+            if i >= new_s1.len() {
                 return -1;
             }
-            if i == new_s2.len() {
+            if i >= new_s2.len() {
                 return 1;
             }
             let x = compare(new_s1[i].clone(), new_s2[i].clone());
@@ -92,18 +97,10 @@ fn compare(mut s1: Vec<char>, mut s2: Vec<char>) -> i32 {
         }
     }
     if !s1.contains(&'[') {
-        let mut new_vec1 = vec!['['];
-        new_vec1.append(&mut s1);
-        new_vec1.push(']');
-        return compare(new_vec1.clone(), s2.clone());
+        return compare(wrap_parenthesis(s1), s2);
+    } else {
+        return compare(s1, wrap_parenthesis(s2));
     }
-    if !s2.contains(&'[') {
-        let mut new_vec1 = vec!['['];
-        new_vec1.append(&mut s2);
-        new_vec1.push(']');
-        return compare(s1.clone(), new_vec1.clone());
-    }
-    return 0;
 }
 
 fn main() {
@@ -116,9 +113,6 @@ fn main() {
             res += i + 1;
             println!("{}", res);
         }
-        //res += (compare(s1.clone(), s2.clone()) == 1) as i32 * i;
-        //println!("{}", res);
-        //println!("{}", compare(s1.clone(), s2.clone()));
     }
     println!("{}", res);
 }
