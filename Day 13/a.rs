@@ -72,13 +72,7 @@ fn compare(mut s1: Vec<char>, mut s2: Vec<char>) -> i32 {
         return 0;
     }
     if !s1.contains(&'[') && !s2.contains(&'[') {
-        if s1 >= s2 {
-            return 1;
-        }
-        if s1 < s2 {
-            return -1;
-        }
-        return 0;
+        return Ord::cmp(&s1, &s2) as i32;
     }
     if s1.contains(&'[') && s2.contains(&']') {
         let new_s1 = get_elements(s1.clone());
@@ -94,6 +88,7 @@ fn compare(mut s1: Vec<char>, mut s2: Vec<char>) -> i32 {
                 n if (n == -1 || n == 1) => return n, _ => continue,
             }
         }
+        return 0;
     }
     if !s1.contains(&'[') {
         return compare(wrap_parenthesis(s1), s2);
