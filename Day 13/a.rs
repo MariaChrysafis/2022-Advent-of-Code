@@ -90,9 +90,8 @@ fn compare(mut s1: Vec<char>, mut s2: Vec<char>) -> i32 {
             if i >= new_s2.len() {
                 return 1;
             }
-            let x = compare(new_s1[i].clone(), new_s2[i].clone());
-            if x == -1 || x == 1 {
-                return x;
+            match compare(new_s1[i].clone(), new_s2[i].clone()) {
+                n if (n == -1 || n == 1) => return n, _ => continue,
             }
         }
     }
