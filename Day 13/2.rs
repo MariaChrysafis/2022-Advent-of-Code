@@ -43,15 +43,15 @@ fn get_elements(s: Vec<char>) -> Vec<Vec<char>> {
     ans.push(Vec::new());
     let mut sum = 0;
     for i in 1..s.len() - 1 {
-        if s[i] == '[' {
-            sum += 1;
-        }
-        if s[i] == ']' {
-            sum -= 1;
-        }
-        if sum == 0 && s[i] == ',' {
-            ans.push(Vec::new());
-            continue;
+        match s[i] {
+            '[' => sum += 1,
+            ']' => sum -= 1,
+            _ => {
+                if sum == 0 && s[i] == ',' {
+                    ans.push(Vec::new());
+                    continue;
+                }
+            },
         }
         let last_index = ans.len() - 1;
         ans[last_index].push(s[i]);
