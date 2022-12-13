@@ -79,11 +79,8 @@ fn compare(mut s1: Vec<char>, mut s2: Vec<char>) -> i32 {
         let new_s1 = get_elements(s1.clone());
         let new_s2 = get_elements(s2.clone());
         for i in 0..max(new_s1.len(), new_s2.len()) {
-            if i >= new_s1.len() {
-                return -1;
-            }
-            if i >= new_s2.len() {
-                return 1;
+            if i >= new_s1.len() || i >= new_s2.len() {
+                return if (i >= new_s1.len()) {return -1;} else {return 1;};
             }
             match compare(new_s1[i].clone(), new_s2[i].clone()) {
                 n if (n == -1 || n == 1) => return n, _ => continue,
