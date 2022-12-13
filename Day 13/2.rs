@@ -69,10 +69,8 @@ fn wrap_parenthesis (s1: Vec<char>) -> Vec<char> {
 
 fn compare(mut s1: Vec<char>, mut s2: Vec<char>) -> i32 {
     if !s1.contains(&'[') && !s2.contains(&'[') {
-        let string1: String = s1.into_iter().collect();
-        let string2: String = s2.into_iter().collect();
-        let x1: i32 = string1.parse().unwrap();
-        let x2: i32 = string2.parse().unwrap();
+        let x1: i32 = (s1.into_iter().collect::<String>()).parse().unwrap();
+        let x2: i32 = (s2.into_iter().collect::<String>()).parse().unwrap();
         return Ord::cmp(&x1, &x2) as i32;
     }
     if s1.contains(&'[') && s2.contains(&']') {
